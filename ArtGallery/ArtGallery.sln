@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtGallery", "ArtGallery\ArtGallery.csproj", "{8AB7C5C2-F178-4FCA-B8A4-907F64CE302F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persoane", "..\..\..\..\Lab+Proiect\Lab5\Sapta5 final\Saptamana 5\MVC_PERSOANE\Persoane\Persoane\Persoane.csproj", "{0267838C-34B0-4136-83BF-B552E9F05449}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8AB7C5C2-F178-4FCA-B8A4-907F64CE302F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AB7C5C2-F178-4FCA-B8A4-907F64CE302F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AB7C5C2-F178-4FCA-B8A4-907F64CE302F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AB7C5C2-F178-4FCA-B8A4-907F64CE302F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0267838C-34B0-4136-83BF-B552E9F05449}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0267838C-34B0-4136-83BF-B552E9F05449}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0267838C-34B0-4136-83BF-B552E9F05449}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0267838C-34B0-4136-83BF-B552E9F05449}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {554FF629-05B8-4BA3-B014-916222FF92EB}
+	EndGlobalSection
+EndGlobal

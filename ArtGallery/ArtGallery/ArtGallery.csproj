@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -51,7 +52,11 @@
     <Compile Include="Controller\CSignup.cs" />
     <Compile Include="Controller\CVizitator.cs" />
     <Compile Include="Controller\CWelcome.cs" />
+    <Compile Include="Model\Limba.cs" />
+    <Compile Include="Model\ModelOpere.cs" />
+    <Compile Include="Model\Observer.cs" />
     <Compile Include="Model\OperaArta.cs" />
+    <Compile Include="Model\Opere.cs" />
     <Compile Include="Model\Persistenta\PersistentaOperaArta.cs" />
     <Compile Include="Model\Persistenta\PersistentaUtilizatori.cs" />
     <Compile Include="Model\Sculptura.cs" />

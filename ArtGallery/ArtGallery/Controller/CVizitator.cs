@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using ArtGallery.Model;
 using ArtGallery.Model.Persistenta;
 using System.Windows.Forms;
+using ArtGallery.View;
 
 namespace ArtGallery.Controller
 {
-    class CVizitator
+    public class CVizitator : Observer
     {
         private readonly Dictionary<string, int> indecsiGrid;
         
         private VVizitator vVizitator;
-        private PersistentaOperaArta persistentaOperaArta;
+        private ModelArtGallery model;
 
-        public CVizitator()
+        public CVizitator(VVizitator vVizitator)
         {
             indecsiGrid = initializareIndecsi();
-            this.vVizitator = new VVizitator();
-            this.persistentaOperaArta = new PersistentaOperaArta();
+            this.vVizitator = vVizitator;
+            this.model = vVizitator.GetModelArtGallery();
             this.GestionareEvenimente();
         }
 
@@ -32,39 +33,16 @@ namespace ArtGallery.Controller
             vVizitator.GetButtonCautare().Click += new EventHandler(cautare);
             vVizitator.GetButtonBack().Click += new EventHandler(goBack);
             vVizitator.GetButtonAutentificare().Click += new EventHandler(goAutentificare);
+
+            vVizitator.GetButtonRomana().Click += new EventHandler(romana);
+            vVizitator.GetButtonEngleza().Click += new EventHandler(engleza);
+            vVizitator.GetButtonItaliana().Click += new EventHandler(italiana);
+            vVizitator.GetButtonSpaniola().Click += new EventHandler(spaniola);
         }
 
         private void refresh(object sender, EventArgs e)
-        {
-            List<OperaArta> opere = persistentaOperaArta.ListareOpere();
-            vVizitator.GetDataGridViewOpere().Rows.Clear();
-            if (opere != null)
-            {
-                foreach (OperaArta opera in opere)
-                {
-                    DataGridViewRow rand = new DataGridViewRow();
-                    rand.CreateCells(vVizitator.GetDataGridViewOpere());
-                    rand.Cells[indecsiGrid["TitluOpera"]].Value = opera.GetTitlu();
-                    rand.Cells[indecsiGrid["NumeArtist"]].Value = opera.GetNumeArtist();
-                    rand.Cells[indecsiGrid["AnRealizare"]].Value = opera.GetAnRealizare();
-                    if (opera is Tablou)
-                    {
-                        rand.Cells[indecsiGrid["TipOpera"]].Value = "tablou";
-                        rand.Cells[indecsiGrid["GenPictura"]].Value = ((Tablou)opera).GetGenPictura();
-                        rand.Cells[indecsiGrid["TehnicaTablou"]].Value = ((Tablou)opera).GetTehnica();
-                    }
-                    else if (opera is Sculptura)
-                    {
-                        rand.Cells[indecsiGrid["TipOpera"]].Value = "sculptura";
-                        rand.Cells[indecsiGrid["TipSculptura"]].Value = ((Sculptura)opera).GetTip();
-                    }
-                    else
-                    {
-                        rand.Cells[indecsiGrid["TipOpera"]].Value = "operaDeArta";
-                    }
-                    vVizitator.GetDataGridViewOpere().Rows.Add(rand);
-                }
-            }
+        {           
+            model.SetTipOperatie("vizualizare");
         }
 
         private void cautare(object sender, EventArgs e)
@@ -74,28 +52,29 @@ namespace ArtGallery.Controller
 
             if (informatie.Length > 0)
             {
+                model.SetInformatieCautata(informatie);
                 switch (index)
                 {
                     case 0:
-                        cautareDupaCriteriu(informatie, "tipOpera");
+                        model.SetTipOperatie("cautareTipOpera");
                         break;
                     case 1:
-                        cautareDupaCriteriu(informatie, "titluOpera");
+                        model.SetTipOperatie("cautareTitlu");
                         break;
                     case 2:
-                        cautareDupaCriteriu(informatie, "numeArtist");
+                        model.SetTipOperatie("cautareNumeArtist");
                         break;
                     case 3:
-                        cautareDupaCriteriu(informatie, "anRealizare");
+                        model.SetTipOperatie("cautareAnRealizare");
                         break;
                     case 4:
-                        cautareDupaCriteriu(informatie, "genPictura");
+                        model.SetTipOperatie("cautareGenPictura");
                         break;
                     case 5:
-                        cautareDupaCriteriu(informatie, "tehnicaPictura");
+                        model.SetTipOperatie("cautareTehnicaPictura");
                         break;
                     case 6:
-                        cautareDupaCriteriu(informatie, "tipSculptura");
+                        model.SetTipOperatie("cautareTipSculptura");
                         break;
                 }
             }
@@ -103,76 +82,6 @@ namespace ArtGallery.Controller
             {
                 MessageBox.Show("Nu s-a introdus informatia cautata!");
             }
-        }
-
-        private void cautareDupaCriteriu(string informatie, string criteriu)
-        {
-            List<OperaArta> opere = getListaFiltrata(informatie, criteriu);           
-            vVizitator.GetDataGridViewOpere().Rows.Clear();
-
-            if (opere != null)
-            {
-                foreach (OperaArta opera in opere)
-                {
-                    DataGridViewRow rand = new DataGridViewRow();
-                    rand.CreateCells(vVizitator.GetDataGridViewOpere());
-                    rand.Cells[indecsiGrid["TitluOpera"]].Value = opera.GetTitlu();
-                    rand.Cells[indecsiGrid["NumeArtist"]].Value = opera.GetNumeArtist();
-                    rand.Cells[indecsiGrid["AnRealizare"]].Value = opera.GetAnRealizare();
-                    if (opera is Tablou)
-                    {
-                        rand.Cells[indecsiGrid["TipOpera"]].Value = "tablou";
-                        rand.Cells[indecsiGrid["GenPictura"]].Value = ((Tablou)opera).GetGenPictura();
-                        rand.Cells[indecsiGrid["TehnicaTablou"]].Value = ((Tablou)opera).GetTehnica();
-                    }
-                    else if (opera is Sculptura)
-                    {
-                        rand.Cells[indecsiGrid["TipOpera"]].Value = "sculptura";
-                        rand.Cells[indecsiGrid["TipSculptura"]].Value = ((Sculptura)opera).GetTip();
-                    }
-                    else
-                    {
-                        rand.Cells[indecsiGrid["TipOpera"]].Value = "operaDeArta";
-                    }
-                    vVizitator.GetDataGridViewOpere().Rows.Add(rand);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Nu s-a gasit nicio opera!");
-            }
-        }
-
-        private List<OperaArta> getListaFiltrata(string informatie, string criteriu)
-        {
-            List<OperaArta> opere = new List<OperaArta>();
-
-            switch (criteriu)
-            {
-                case "tipOpera":
-                    opere = this.persistentaOperaArta.FiltrareOpereTip(informatie);
-                    break;
-                case "titluOpera":
-                    opere = this.persistentaOperaArta.FiltrareOpereTitlu(informatie);                    
-                    break;
-                case "numeArtist":
-                    opere = this.persistentaOperaArta.FiltrareOpereArtist(informatie);
-                    break;
-                case "anRealizare":
-                    opere = this.persistentaOperaArta.FiltrareOpereAn(informatie);
-                    break;
-                case "genPictura":
-                    opere = this.persistentaOperaArta.FiltrareOpereGenPictura(informatie);
-                    break;
-                case "tehnicaPictura":
-                    opere = this.persistentaOperaArta.FiltrareOpereTehnicaPictura(informatie);
-                    break;
-                case "tipSculptura":
-                    opere = this.persistentaOperaArta.FiltrareOpereTipSculptura(informatie);
-                    break;
-            }
-
-            return opere;
         }        
 
         private void goBack(object sender, EventArgs e)
@@ -188,8 +97,32 @@ namespace ArtGallery.Controller
         private void autentificare(object sender, EventArgs e)
         {
             this.vVizitator.Hide();
-            CWelcome cWelcome = new CWelcome();
-            cWelcome.GetVWelcome().Show();
+            VWelcome vWelcome = new VWelcome(model);
+            vWelcome.Show();            
+        }
+
+        private void romana(object sender, EventArgs e)
+        {
+            this.model.SetLimba("romana");
+            this.model.SetTipOperatie("limba");
+        }
+
+        private void engleza(object sender, EventArgs e)
+        {
+            this.model.SetLimba("engleza");
+            this.model.SetTipOperatie("limba");
+        }
+
+        private void italiana(object sender, EventArgs e)
+        {
+            this.model.SetLimba("italiana");
+            this.model.SetTipOperatie("limba");
+        }
+
+        private void spaniola(object sender, EventArgs e)
+        {
+            this.model.SetLimba("spaniola");
+            this.model.SetTipOperatie("limba");
         }
 
         private Dictionary<string, int> initializareIndecsi()
@@ -204,6 +137,11 @@ namespace ArtGallery.Controller
                 ["TehnicaTablou"] = 5,
                 ["TipSculptura"] = 6
             };
+        }
+
+        public void Update()
+        {
+            
         }
     }
 }

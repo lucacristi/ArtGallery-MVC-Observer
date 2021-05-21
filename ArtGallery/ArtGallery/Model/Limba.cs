@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace ArtGallery.Model
 {
-    class Limba
+    public class Limba
     {
         private string limba;
 
@@ -52,12 +52,11 @@ namespace ArtGallery.Model
                     date.Add("password", xElement.Element("password").Value);
 
                     //view signUp
-                    date.Add("inregistrare", xElement.Element("inregistrare").Value);
-                    date.Add("inregistrare_btn", xElement.Element("inregistrare_btn").Value);
+                    date.Add("inregistrare", xElement.Element("inregistrare").Value);                    
                     date.Add("inapoi_la_login", xElement.Element("inapoi_la_login").Value);
                     
                     //view vizitator
-                    date.Add("lista_persoane", xElement.Element("lista_persoane").Value);
+                    date.Add("lista_opere", xElement.Element("lista_opere").Value);
                     date.Add("tip_opera", xElement.Element("tip_opera").Value);
                     date.Add("titlu_opera", xElement.Element("titlu_opera").Value);
                     date.Add("nume_artist", xElement.Element("nume_artist").Value);
@@ -79,9 +78,12 @@ namespace ArtGallery.Model
 
 
                     //view Administrator
+                    date.Add("lista_utilizatori", xElement.Element("lista_utilizatori").Value);
                     date.Add("criteriu_filtrare_opere", xElement.Element("criteriu_filtrare_opere").Value);
                     date.Add("criteriu_filtrare_utilizatori", xElement.Element("criteriu_filtrare_utilizatori").Value);                    
                     date.Add("tip_utilizator", xElement.Element("tip_utilizator").Value);
+                    date.Add("angajat", xElement.Element("angajat").Value);
+                    date.Add("administrator", xElement.Element("administrator").Value);
                 }
                 return date;
             }

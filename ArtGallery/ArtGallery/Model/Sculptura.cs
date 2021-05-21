@@ -1,6 +1,6 @@
 ﻿namespace ArtGallery.Model
 {
-    class Sculptura:OperaArta
+    public class Sculptura:OperaArta
     {
         private string tip;
 

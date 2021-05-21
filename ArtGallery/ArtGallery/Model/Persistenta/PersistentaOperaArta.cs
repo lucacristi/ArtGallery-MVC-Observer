@@ -9,13 +9,13 @@ using System.Xml.Linq;
 
 namespace ArtGallery.Model.Persistenta
 {
-    class PersistentaOperaArta
+    public class PersistentaOperaArta
     {
         private SqlConnection connection;
 
         public PersistentaOperaArta()
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["ListaOpere"].ConnectionString;
+            string connectionString = ConfigurationManager.ConnectionStrings["Opere"].ConnectionString;
             connection = new SqlConnection(connectionString);
         }
 

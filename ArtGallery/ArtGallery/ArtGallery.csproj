@@ -114,6 +114,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="View\VWelcome.resx">
       <DependentUpon>VWelcome.cs</DependentUpon>
@@ -131,6 +132,17 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Imagini\Anglia1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imagini\Romania.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imagini\italia.svg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Imagini\España.svg.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

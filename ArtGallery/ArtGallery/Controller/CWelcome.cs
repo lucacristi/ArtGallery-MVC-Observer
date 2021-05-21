@@ -6,21 +6,21 @@ using System.Windows.Forms;
 
 namespace ArtGallery.Controller
 {
-    class CWelcome
+    public class CWelcome : Observer
     {
         private VWelcome vWelcome;
-        private PersistentaUtilizatori persistUtilizatori;
+        private ModelArtGallery model;
 
-        public CWelcome()
+        public CWelcome(VWelcome vWelcome)
         {
-            this.vWelcome = new VWelcome();
-            this.persistUtilizatori = new PersistentaUtilizatori();
+            this.vWelcome = vWelcome;
+            this.model = vWelcome.GetModel();
             this.gestionareEvenimente();
         }
 
         public VWelcome GetVWelcome()
         {
-            return this.vWelcome;
+            return vWelcome;
         }
 
         private void gestionareEvenimente()
@@ -28,6 +28,11 @@ namespace ArtGallery.Controller
             this.vWelcome.GetButtonLogin().Click += new EventHandler(login);
             this.vWelcome.GetLinkLabelSignUp().Click += new EventHandler(signup);
             this.vWelcome.GetLinkLabelContinuaCaVizitator().Click += new EventHandler(continuaCaVizitator);
+            vWelcome.GetButtonRomana().Click += new EventHandler(romana);
+            vWelcome.GetButtonEngleza().Click += new EventHandler(engleza);
+            vWelcome.GetButtonItaliana().Click += new EventHandler(italiana);
+            vWelcome.GetButtonSpaniola().Click += new EventHandler(spaniola);
+
         }
 
         private void login(object sender, EventArgs e)
@@ -37,7 +42,7 @@ namespace ArtGallery.Controller
 
             if (username.Length > 0 && password.Length > 0)
             {
-                Utilizator utilizator = persistUtilizatori.CautaUtilizator(username);                
+                Utilizator utilizator = model.GetPersistentaUtilizator().CautaUtilizator(username);                
                 if (utilizator != null)
                 {
                     if (utilizator.GetTipUtilizator().Equals("administrator"))
@@ -46,9 +51,9 @@ namespace ArtGallery.Controller
                         {
                             MessageBox.Show("Logare cu succes ca admin!");
 
-                            this.vWelcome.Hide();
-                            CAdministrator cAdministrator = new CAdministrator(utilizator.GetUsername());
-                            cAdministrator.GetVAdministrator().Show();
+                            vWelcome.Hide();                
+                            new VAdministrator(model).Show();
+                            
                         }
                         else
                         {
@@ -62,9 +67,8 @@ namespace ArtGallery.Controller
                         {
                             MessageBox.Show("Logare cu succes!");
 
-                            this.vWelcome.Hide();
-                            CAngajat cAngajat = new CAngajat(utilizator.GetUsername());
-                            cAngajat.GetVAngajat().Show();
+                            vWelcome.Hide();
+                            new VAngajat(model).Show();                            
                         }
                         else
                         {
@@ -84,16 +88,44 @@ namespace ArtGallery.Controller
 
         private void signup(object sender, EventArgs e)
         {
-            this.vWelcome.Hide();
-            CSignup cSignup = new CSignup();
-            cSignup.GetVSignup().Show();
+            vWelcome.Hide();
+            new VSignup(model).Show();
+           
         }
 
         private void continuaCaVizitator(object sender, EventArgs e)
         {
-            this.vWelcome.Hide();
-            CVizitator cVizitator = new CVizitator();
-            cVizitator.GetVVizitator().Show();
+            vWelcome.Hide();
+            new VVizitator(model).Show();           
+        }
+
+        private void romana(object sender, EventArgs e)
+        {
+            this.model.SetLimba("romana");
+            this.model.SetTipOperatie("limba");
+        }
+
+        private void engleza(object sender, EventArgs e)
+        {
+            this.model.SetLimba("engleza");
+            this.model.SetTipOperatie("limba");
+        }
+
+        private void italiana(object sender, EventArgs e)
+        {
+            this.model.SetLimba("italiana");
+            this.model.SetTipOperatie("limba");
+        }
+
+        private void spaniola(object sender, EventArgs e)
+        {
+            this.model.SetLimba("spaniola");
+            this.model.SetTipOperatie("limba");
+        }
+
+        public void Update()
+        {
+            
         }
     }   
 }

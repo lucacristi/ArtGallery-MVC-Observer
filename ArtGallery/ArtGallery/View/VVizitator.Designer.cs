@@ -45,6 +45,10 @@
             this.GenPictura = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TehnicaPictura = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TipSculptura = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.buttonSpaniola = new System.Windows.Forms.Button();
+            this.buttonItaliana = new System.Windows.Forms.Button();
+            this.buttonEngleza = new System.Windows.Forms.Button();
+            this.buttonRomana = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,7 +56,7 @@
             // 
             this.labelListaOpere.AutoSize = true;
             this.labelListaOpere.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelListaOpere.Location = new System.Drawing.Point(115, 27);
+            this.labelListaOpere.Location = new System.Drawing.Point(120, 71);
             this.labelListaOpere.Name = "labelListaOpere";
             this.labelListaOpere.Size = new System.Drawing.Size(276, 26);
             this.labelListaOpere.TabIndex = 1;
@@ -60,7 +64,7 @@
             // 
             // buttonRefresh
             // 
-            this.buttonRefresh.Location = new System.Drawing.Point(526, 345);
+            this.buttonRefresh.Location = new System.Drawing.Point(531, 389);
             this.buttonRefresh.Name = "buttonRefresh";
             this.buttonRefresh.Size = new System.Drawing.Size(75, 23);
             this.buttonRefresh.TabIndex = 2;
@@ -71,7 +75,7 @@
             // 
             this.labelCriteriuFiltrare.AutoSize = true;
             this.labelCriteriuFiltrare.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelCriteriuFiltrare.Location = new System.Drawing.Point(16, 404);
+            this.labelCriteriuFiltrare.Location = new System.Drawing.Point(23, 421);
             this.labelCriteriuFiltrare.Name = "labelCriteriuFiltrare";
             this.labelCriteriuFiltrare.Size = new System.Drawing.Size(263, 29);
             this.labelCriteriuFiltrare.TabIndex = 3;
@@ -88,7 +92,7 @@
             "Gen Pictura",
             "Tehnica Pictura",
             "Tip Sculptura"});
-            this.comboBoxCriteriu.Location = new System.Drawing.Point(19, 445);
+            this.comboBoxCriteriu.Location = new System.Drawing.Point(26, 462);
             this.comboBoxCriteriu.Name = "comboBoxCriteriu";
             this.comboBoxCriteriu.Size = new System.Drawing.Size(121, 24);
             this.comboBoxCriteriu.TabIndex = 4;
@@ -96,7 +100,7 @@
             // 
             // textBoxInformatieCautata
             // 
-            this.textBoxInformatieCautata.Location = new System.Drawing.Point(19, 519);
+            this.textBoxInformatieCautata.Location = new System.Drawing.Point(26, 536);
             this.textBoxInformatieCautata.Name = "textBoxInformatieCautata";
             this.textBoxInformatieCautata.Size = new System.Drawing.Size(100, 22);
             this.textBoxInformatieCautata.TabIndex = 5;
@@ -105,7 +109,7 @@
             // 
             this.labelInformatieCautata.AutoSize = true;
             this.labelInformatieCautata.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelInformatieCautata.Location = new System.Drawing.Point(16, 487);
+            this.labelInformatieCautata.Location = new System.Drawing.Point(23, 504);
             this.labelInformatieCautata.Name = "labelInformatieCautata";
             this.labelInformatieCautata.Size = new System.Drawing.Size(296, 29);
             this.labelInformatieCautata.TabIndex = 6;
@@ -113,7 +117,7 @@
             // 
             // buttonCauta
             // 
-            this.buttonCauta.Location = new System.Drawing.Point(19, 563);
+            this.buttonCauta.Location = new System.Drawing.Point(26, 581);
             this.buttonCauta.Name = "buttonCauta";
             this.buttonCauta.Size = new System.Drawing.Size(75, 23);
             this.buttonCauta.TabIndex = 7;
@@ -122,7 +126,7 @@
             // 
             // buttonBack
             // 
-            this.buttonBack.Location = new System.Drawing.Point(1032, 581);
+            this.buttonBack.Location = new System.Drawing.Point(1039, 588);
             this.buttonBack.Name = "buttonBack";
             this.buttonBack.Size = new System.Drawing.Size(75, 23);
             this.buttonBack.TabIndex = 8;
@@ -131,7 +135,7 @@
             // 
             // buttonAutentificare
             // 
-            this.buttonAutentificare.Location = new System.Drawing.Point(998, 12);
+            this.buttonAutentificare.Location = new System.Drawing.Point(1003, 56);
             this.buttonAutentificare.Name = "buttonAutentificare";
             this.buttonAutentificare.Size = new System.Drawing.Size(109, 41);
             this.buttonAutentificare.TabIndex = 9;
@@ -149,7 +153,7 @@
             this.GenPictura,
             this.TehnicaPictura,
             this.TipSculptura});
-            this.dataGridView1.Location = new System.Drawing.Point(21, 68);
+            this.dataGridView1.Location = new System.Drawing.Point(26, 112);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(1086, 258);
@@ -196,11 +200,55 @@
             this.TipSculptura.Name = "TipSculptura";
             this.TipSculptura.Width = 90;
             // 
+            // buttonSpaniola
+            // 
+            this.buttonSpaniola.BackgroundImage = global::ArtGallery.Properties.Resources.España_svg;
+            this.buttonSpaniola.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonSpaniola.Location = new System.Drawing.Point(1039, 5);
+            this.buttonSpaniola.Name = "buttonSpaniola";
+            this.buttonSpaniola.Size = new System.Drawing.Size(84, 45);
+            this.buttonSpaniola.TabIndex = 22;
+            this.buttonSpaniola.UseVisualStyleBackColor = true;
+            // 
+            // buttonItaliana
+            // 
+            this.buttonItaliana.BackgroundImage = global::ArtGallery.Properties.Resources.italia_svg;
+            this.buttonItaliana.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonItaliana.Location = new System.Drawing.Point(949, 5);
+            this.buttonItaliana.Name = "buttonItaliana";
+            this.buttonItaliana.Size = new System.Drawing.Size(84, 45);
+            this.buttonItaliana.TabIndex = 21;
+            this.buttonItaliana.UseVisualStyleBackColor = true;
+            // 
+            // buttonEngleza
+            // 
+            this.buttonEngleza.BackgroundImage = global::ArtGallery.Properties.Resources.Anglia1;
+            this.buttonEngleza.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonEngleza.Location = new System.Drawing.Point(859, 5);
+            this.buttonEngleza.Name = "buttonEngleza";
+            this.buttonEngleza.Size = new System.Drawing.Size(84, 45);
+            this.buttonEngleza.TabIndex = 20;
+            this.buttonEngleza.UseVisualStyleBackColor = true;
+            // 
+            // buttonRomana
+            // 
+            this.buttonRomana.BackgroundImage = global::ArtGallery.Properties.Resources.Romania;
+            this.buttonRomana.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonRomana.Location = new System.Drawing.Point(769, 5);
+            this.buttonRomana.Name = "buttonRomana";
+            this.buttonRomana.Size = new System.Drawing.Size(84, 45);
+            this.buttonRomana.TabIndex = 19;
+            this.buttonRomana.UseVisualStyleBackColor = true;
+            // 
             // VVizitator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1140, 616);
+            this.Controls.Add(this.buttonSpaniola);
+            this.Controls.Add(this.buttonItaliana);
+            this.Controls.Add(this.buttonEngleza);
+            this.Controls.Add(this.buttonRomana);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.buttonAutentificare);
             this.Controls.Add(this.buttonBack);
@@ -237,6 +285,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn GenPictura;
         private System.Windows.Forms.DataGridViewTextBoxColumn TehnicaPictura;
         private System.Windows.Forms.DataGridViewTextBoxColumn TipSculptura;
+        private System.Windows.Forms.Button buttonSpaniola;
+        private System.Windows.Forms.Button buttonItaliana;
+        private System.Windows.Forms.Button buttonEngleza;
+        private System.Windows.Forms.Button buttonRomana;
     }
 }
 

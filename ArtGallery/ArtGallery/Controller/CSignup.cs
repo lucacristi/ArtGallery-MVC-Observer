@@ -6,15 +6,15 @@ using System.Windows.Forms;
 
 namespace ArtGallery.Controller
 {
-    class CSignup
+    public class CSignup : Observer
     {
         private VSignup vSignup;
-        private PersistentaUtilizatori utilizatorP;
+        private ModelArtGallery model;
 
-        public CSignup()
+        public CSignup(VSignup vSignup)
         {
-            this.vSignup = new VSignup();
-            this.utilizatorP = new PersistentaUtilizatori();
+            this.vSignup = vSignup;
+            this.model = vSignup.GetModelArtGallery();
             this.gestionareEvenimente();
         }
 
@@ -27,6 +27,11 @@ namespace ArtGallery.Controller
         {
             this.vSignup.GetButtonSignup().Click += new EventHandler(signup);
             this.vSignup.GetLabelBackToLogin().Click += new EventHandler(backToLogin);
+
+            vSignup.GetButtonRomana().Click += new EventHandler(romana);
+            vSignup.GetButtonEngleza().Click += new EventHandler(engleza);
+            vSignup.GetButtonItaliana().Click += new EventHandler(italiana);
+            vSignup.GetButtonSpaniola().Click += new EventHandler(spaniola);
         }
 
         private void signup(object sender, EventArgs e)
@@ -36,14 +41,14 @@ namespace ArtGallery.Controller
 
             if (username.Length > 0 && password.Length > 0)
             {
-                if (this.utilizatorP.CautaUtilizator(username) != null)
+                if (model.GetPersistentaUtilizator().CautaUtilizator(username) != null)
                 {
                     MessageBox.Show("Exista deja un utilizator cu acest username!");
                 }
                 else
                 {
                     Utilizator utilizator = new Utilizator(username, password, "angajat");
-                    if (this.utilizatorP.AdaugareUtilizator(utilizator))
+                    if (model.GetPersistentaUtilizator().AdaugareUtilizator(utilizator))
                     {
                         MessageBox.Show("Adaugare incheiata cu succes!");
                         vSignup.GetTextUsername().Text = "";
@@ -62,8 +67,37 @@ namespace ArtGallery.Controller
         private void backToLogin(object sender, EventArgs e)
         {
             this.vSignup.Hide();
-            CWelcome cWelcome = new CWelcome();
-            cWelcome.GetVWelcome().Show();
+            VWelcome vWelcome = new VWelcome(model);
+            vWelcome.Show();         
+        }
+
+        private void romana(object sender, EventArgs e)
+        {
+            this.model.SetLimba("romana");
+            this.model.SetTipOperatie("limba");
+        }
+
+        private void engleza(object sender, EventArgs e)
+        {
+            this.model.SetLimba("engleza");
+            this.model.SetTipOperatie("limba");
+        }
+
+        private void italiana(object sender, EventArgs e)
+        {
+            this.model.SetLimba("italiana");
+            this.model.SetTipOperatie("limba");
+        }
+
+        private void spaniola(object sender, EventArgs e)
+        {
+            this.model.SetLimba("spaniola");
+            this.model.SetTipOperatie("limba");
+        }
+
+        public void Update()
+        {
+            
         }
     }    
 }

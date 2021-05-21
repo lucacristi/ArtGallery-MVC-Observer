@@ -35,6 +35,10 @@
             this.labelUsername = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.linkLabelLogin = new System.Windows.Forms.LinkLabel();
+            this.buttonSpaniola = new System.Windows.Forms.Button();
+            this.buttonItaliana = new System.Windows.Forms.Button();
+            this.buttonEngleza = new System.Windows.Forms.Button();
+            this.buttonRomana = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -101,11 +105,55 @@
             this.linkLabelLogin.TabStop = true;
             this.linkLabelLogin.Text = "Back to Log in";
             // 
+            // buttonSpaniola
+            // 
+            this.buttonSpaniola.BackgroundImage = global::ArtGallery.Properties.Resources.España_svg;
+            this.buttonSpaniola.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonSpaniola.Location = new System.Drawing.Point(706, 12);
+            this.buttonSpaniola.Name = "buttonSpaniola";
+            this.buttonSpaniola.Size = new System.Drawing.Size(84, 45);
+            this.buttonSpaniola.TabIndex = 18;
+            this.buttonSpaniola.UseVisualStyleBackColor = true;
+            // 
+            // buttonItaliana
+            // 
+            this.buttonItaliana.BackgroundImage = global::ArtGallery.Properties.Resources.italia_svg;
+            this.buttonItaliana.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonItaliana.Location = new System.Drawing.Point(616, 12);
+            this.buttonItaliana.Name = "buttonItaliana";
+            this.buttonItaliana.Size = new System.Drawing.Size(84, 45);
+            this.buttonItaliana.TabIndex = 17;
+            this.buttonItaliana.UseVisualStyleBackColor = true;
+            // 
+            // buttonEngleza
+            // 
+            this.buttonEngleza.BackgroundImage = global::ArtGallery.Properties.Resources.Anglia1;
+            this.buttonEngleza.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonEngleza.Location = new System.Drawing.Point(526, 12);
+            this.buttonEngleza.Name = "buttonEngleza";
+            this.buttonEngleza.Size = new System.Drawing.Size(84, 45);
+            this.buttonEngleza.TabIndex = 16;
+            this.buttonEngleza.UseVisualStyleBackColor = true;
+            // 
+            // buttonRomana
+            // 
+            this.buttonRomana.BackgroundImage = global::ArtGallery.Properties.Resources.Romania;
+            this.buttonRomana.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonRomana.Location = new System.Drawing.Point(436, 12);
+            this.buttonRomana.Name = "buttonRomana";
+            this.buttonRomana.Size = new System.Drawing.Size(84, 45);
+            this.buttonRomana.TabIndex = 15;
+            this.buttonRomana.UseVisualStyleBackColor = true;
+            // 
             // VSignup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonSpaniola);
+            this.Controls.Add(this.buttonItaliana);
+            this.Controls.Add(this.buttonEngleza);
+            this.Controls.Add(this.buttonRomana);
             this.Controls.Add(this.linkLabelLogin);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBoxPassword);
@@ -129,5 +177,9 @@
         private System.Windows.Forms.Label labelUsername;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.LinkLabel linkLabelLogin;
+        private System.Windows.Forms.Button buttonSpaniola;
+        private System.Windows.Forms.Button buttonItaliana;
+        private System.Windows.Forms.Button buttonEngleza;
+        private System.Windows.Forms.Button buttonRomana;
     }
 }

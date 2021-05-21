@@ -1,6 +1,6 @@
 ﻿namespace ArtGallery.Model
 {
-    class Utilizator
+    public class Utilizator
     {
         private string username;
         private string password;

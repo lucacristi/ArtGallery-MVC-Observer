@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ArtGallery.Model
 {
-    interface Observer
+    public interface Observer
     {
         void Update();
     }

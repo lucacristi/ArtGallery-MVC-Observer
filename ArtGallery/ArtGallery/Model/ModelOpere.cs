@@ -7,19 +7,23 @@ using System.Threading.Tasks;
 
 namespace ArtGallery.Model
 {
-    class ModelOpere : Opere
+    public class ModelArtGallery : Opere
     {
         private OperaArta operaArta;
         private PersistentaOperaArta persistentaOpera;
+        private Utilizator utilizator;
+        private PersistentaUtilizatori persistentaUtilizatori;
         private string tipOperatie;
         private string informatieCautata;
         private Limba limba;
 
-        public ModelOpere()
+        public ModelArtGallery()
         {
             observers = new List<Observer>();
             operaArta = null;
+            utilizator = null;
             persistentaOpera = new PersistentaOperaArta();
+            persistentaUtilizatori = new PersistentaUtilizatori();
             tipOperatie = "";
             informatieCautata = "";
             limba = new Limba();
@@ -30,9 +34,19 @@ namespace ArtGallery.Model
             return operaArta;
         }
 
+        public Utilizator GetUtilizator()
+        {
+            return utilizator;
+        }
+
         public PersistentaOperaArta GetPersistentaOperaArta()
         {
             return persistentaOpera;
+        }
+
+        public PersistentaUtilizatori GetPersistentaUtilizator()
+        {
+            return persistentaUtilizatori;
         }
 
         public string GetTipOperatie()
@@ -55,11 +69,17 @@ namespace ArtGallery.Model
             this.operaArta = operaArta;
         }
 
+        public void SetUtilizator(Utilizator utilizator)
+        {
+            this.utilizator = utilizator;
+        }
+
         public void SetTipOperatie(string tipOperatie)
         {
             this.tipOperatie = tipOperatie;
             Notify();
             operaArta = null;
+            utilizator = null;
         }
 
         public void SetInformatieCautata(string informatieCautata)

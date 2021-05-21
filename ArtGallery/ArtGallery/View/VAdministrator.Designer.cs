@@ -65,6 +65,10 @@
             this.labelInformatieUseri = new System.Windows.Forms.Label();
             this.textBoxInformatieUseri = new System.Windows.Forms.TextBox();
             this.buttonSearchUseri = new System.Windows.Forms.Button();
+            this.buttonSpaniola = new System.Windows.Forms.Button();
+            this.buttonItaliana = new System.Windows.Forms.Button();
+            this.buttonEngleza = new System.Windows.Forms.Button();
+            this.buttonRomana = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewOpere)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUseri)).BeginInit();
             this.SuspendLayout();
@@ -357,7 +361,7 @@
             // 
             this.labelDisplayUsername.AutoSize = true;
             this.labelDisplayUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelDisplayUsername.Location = new System.Drawing.Point(1151, 20);
+            this.labelDisplayUsername.Location = new System.Drawing.Point(7, 9);
             this.labelDisplayUsername.Name = "labelDisplayUsername";
             this.labelDisplayUsername.Size = new System.Drawing.Size(128, 29);
             this.labelDisplayUsername.TabIndex = 41;
@@ -398,11 +402,55 @@
             this.buttonSearchUseri.Text = "Cauta";
             this.buttonSearchUseri.UseVisualStyleBackColor = true;
             // 
+            // buttonSpaniola
+            // 
+            this.buttonSpaniola.BackgroundImage = global::ArtGallery.Properties.Resources.España_svg;
+            this.buttonSpaniola.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonSpaniola.Location = new System.Drawing.Point(1399, 12);
+            this.buttonSpaniola.Name = "buttonSpaniola";
+            this.buttonSpaniola.Size = new System.Drawing.Size(84, 45);
+            this.buttonSpaniola.TabIndex = 49;
+            this.buttonSpaniola.UseVisualStyleBackColor = true;
+            // 
+            // buttonItaliana
+            // 
+            this.buttonItaliana.BackgroundImage = global::ArtGallery.Properties.Resources.italia_svg;
+            this.buttonItaliana.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonItaliana.Location = new System.Drawing.Point(1309, 12);
+            this.buttonItaliana.Name = "buttonItaliana";
+            this.buttonItaliana.Size = new System.Drawing.Size(84, 45);
+            this.buttonItaliana.TabIndex = 48;
+            this.buttonItaliana.UseVisualStyleBackColor = true;
+            // 
+            // buttonEngleza
+            // 
+            this.buttonEngleza.BackgroundImage = global::ArtGallery.Properties.Resources.Anglia1;
+            this.buttonEngleza.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonEngleza.Location = new System.Drawing.Point(1219, 12);
+            this.buttonEngleza.Name = "buttonEngleza";
+            this.buttonEngleza.Size = new System.Drawing.Size(84, 45);
+            this.buttonEngleza.TabIndex = 47;
+            this.buttonEngleza.UseVisualStyleBackColor = true;
+            // 
+            // buttonRomana
+            // 
+            this.buttonRomana.BackgroundImage = global::ArtGallery.Properties.Resources.Romania;
+            this.buttonRomana.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonRomana.Location = new System.Drawing.Point(1129, 12);
+            this.buttonRomana.Name = "buttonRomana";
+            this.buttonRomana.Size = new System.Drawing.Size(84, 45);
+            this.buttonRomana.TabIndex = 46;
+            this.buttonRomana.UseVisualStyleBackColor = true;
+            // 
             // VAdministrator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1514, 757);
+            this.Controls.Add(this.buttonSpaniola);
+            this.Controls.Add(this.buttonItaliana);
+            this.Controls.Add(this.buttonEngleza);
+            this.Controls.Add(this.buttonRomana);
             this.Controls.Add(this.buttonSearchUseri);
             this.Controls.Add(this.labelInformatieUseri);
             this.Controls.Add(this.textBoxInformatieUseri);
@@ -478,5 +526,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.Button buttonSpaniola;
+        private System.Windows.Forms.Button buttonItaliana;
+        private System.Windows.Forms.Button buttonEngleza;
+        private System.Windows.Forms.Button buttonRomana;
     }
 }

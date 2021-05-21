@@ -7,30 +7,19 @@ using System.Windows.Forms;
 
 namespace ArtGallery.Controller
 {
-    class CAdministrator
+    public class CAdministrator : Observer
     {
         private readonly Dictionary<string, int> indecsiGridPersoane;
         private string username;
+
         private VAdministrator vAdministrator;
-        private PersistentaOperaArta persistentaOperaArta;
-        private PersistentaUtilizatori persistentaUtilizatori;
+        private ModelArtGallery model;
 
-        public CAdministrator()
+        public CAdministrator(VAdministrator vAdministrator)
         {
             indecsiGridPersoane = initializareIndecsiPersoane();
-            this.vAdministrator = new VAdministrator();
-            this.persistentaOperaArta = new PersistentaOperaArta();
-            this.persistentaUtilizatori = new PersistentaUtilizatori();
-            GestionareEvenimente();
-        }
-
-        public CAdministrator(string username)
-        {
-            indecsiGridPersoane = initializareIndecsiPersoane();
-            this.username = username;
-            vAdministrator = new VAdministrator();
-            persistentaOperaArta = new PersistentaOperaArta();
-            persistentaUtilizatori = new PersistentaUtilizatori();
+            this.vAdministrator = vAdministrator;
+            model = vAdministrator.GetModelArtGallery();
             GestionareEvenimente();
         }
 
@@ -53,6 +42,11 @@ namespace ArtGallery.Controller
             vAdministrator.GetButtonEditeazaUtilizator().Click += new EventHandler(editareUtilizator);
             vAdministrator.GetButtonStergereUtilizator().Click += new EventHandler(stergereUtilizator);
             vAdministrator.GetDataGridViewUtilizatori().SelectionChanged += new EventHandler(selectieUtilizatoriInGrid);
+
+            vAdministrator.GetButtonRomana().Click += new EventHandler(romana);
+            vAdministrator.GetButtonEngleza().Click += new EventHandler(engleza);
+            vAdministrator.GetButtonItaliana().Click += new EventHandler(italiana);
+            vAdministrator.GetButtonSpaniola().Click += new EventHandler(spaniola);
         }
 
         private void setUsername()
@@ -63,41 +57,13 @@ namespace ArtGallery.Controller
         private void logout(object sender, EventArgs e)
         {
             this.vAdministrator.Hide();
-            CWelcome cWelcome = new CWelcome();
-            cWelcome.GetVWelcome().Show();
+            new VWelcome(model).Show();
+           
         }
 
         private void refreshOpere(object sender, EventArgs e)
         {
-            List<OperaArta> opere = persistentaOperaArta.ListareOpere();
-            vAdministrator.GetDataGridViewOpere().Rows.Clear();
-            if (opere != null)
-            {
-                foreach (OperaArta opera in opere)
-                {
-                    DataGridViewRow rand = new DataGridViewRow();
-                    rand.CreateCells(vAdministrator.GetDataGridViewOpere());
-                    rand.Cells[indecsiGridPersoane["TitluOpera"]].Value = opera.GetTitlu();
-                    rand.Cells[indecsiGridPersoane["NumeArtist"]].Value = opera.GetNumeArtist();
-                    rand.Cells[indecsiGridPersoane["AnRealizare"]].Value = opera.GetAnRealizare();
-                    if (opera is Tablou)
-                    {
-                        rand.Cells[indecsiGridPersoane["TipOpera"]].Value = "tablou";
-                        rand.Cells[indecsiGridPersoane["GenPictura"]].Value = ((Tablou)opera).GetGenPictura();
-                        rand.Cells[indecsiGridPersoane["TehnicaTablou"]].Value = ((Tablou)opera).GetTehnica();
-                    }
-                    else if (opera is Sculptura)
-                    {
-                        rand.Cells[indecsiGridPersoane["TipOpera"]].Value = "sculptura";
-                        rand.Cells[indecsiGridPersoane["TipSculptura"]].Value = ((Sculptura)opera).GetTip();
-                    }
-                    else
-                    {
-                        rand.Cells[indecsiGridPersoane["TipOpera"]].Value = "operaDeArta";
-                    }
-                    vAdministrator.GetDataGridViewOpere().Rows.Add(rand);
-                }
-            }
+            model.SetTipOperatie("vizualizare");
         }
 
         private void cautareOpere(object sender, EventArgs e)
@@ -107,28 +73,29 @@ namespace ArtGallery.Controller
 
             if (informatie.Length > 0)
             {
+                model.SetInformatieCautata(informatie);
                 switch (index)
                 {
                     case 0:
-                        cautareOpereDupaCriteriu(informatie, "tipOpera");
+                        model.SetTipOperatie("cautareTipOpera");
                         break;
                     case 1:
-                        cautareOpereDupaCriteriu(informatie, "titluOpera");
+                        model.SetTipOperatie("cautareTitlu");
                         break;
                     case 2:
-                        cautareOpereDupaCriteriu(informatie, "numeArtist");
+                        model.SetTipOperatie("cautareNumeArtist");
                         break;
                     case 3:
-                        cautareOpereDupaCriteriu(informatie, "anRealizare");
+                        model.SetTipOperatie("cautareAnRealizare");
                         break;
                     case 4:
-                        cautareOpereDupaCriteriu(informatie, "genPictura");
+                        model.SetTipOperatie("cautareGenPictura");
                         break;
                     case 5:
-                        cautareOpereDupaCriteriu(informatie, "tehnicaPictura");
+                        model.SetTipOperatie("cautareTehnicaPictura");
                         break;
                     case 6:
-                        cautareOpereDupaCriteriu(informatie, "tipSculptura");
+                        model.SetTipOperatie("cautareTipSculptura");
                         break;
                 }
             }
@@ -140,21 +107,7 @@ namespace ArtGallery.Controller
 
         private void refreshUtilizatori(object sender, EventArgs e)
         {
-            List<Utilizator> utilizatori = persistentaUtilizatori.ListareUtilizatori();
-            vAdministrator.GetDataGridViewUtilizatori().Rows.Clear();
-            if (utilizatori != null)
-            {
-                foreach (Utilizator utilizator in utilizatori)
-                {
-                    DataGridViewRow rand = new DataGridViewRow();
-                    rand.CreateCells(vAdministrator.GetDataGridViewUtilizatori());
-                    rand.Cells[0].Value = utilizator.GetUsername();
-                    rand.Cells[1].Value = utilizator.GetPassword();
-                    rand.Cells[2].Value = utilizator.GetTipUtilizator();
-                    
-                    vAdministrator.GetDataGridViewUtilizatori().Rows.Add(rand);
-                }
-            }
+            model.SetTipOperatie("vizualizareuseri");
         }
 
         private void cautareUtilizatori(object sender, EventArgs e)
@@ -164,13 +117,14 @@ namespace ArtGallery.Controller
             
             if (informatie.Length > 0)
             {
+                model.SetInformatieCautata(informatie);
                 if (index == 0)
                 {
-                    cautareUtilizatoriUsername(informatie);
+                    model.SetTipOperatie("cautareusername");
                 }
                 else
                 {
-                    cautareUtilizatoriTip(informatie);
+                    model.SetTipOperatie("cautaretipuser");
                 }
             }
             else
@@ -189,7 +143,7 @@ namespace ArtGallery.Controller
 
             if (username.Length > 0 && password.Length > 0)
             {
-                if (persistentaUtilizatori.CautaUtilizator(username) != null)
+                if (model.GetPersistentaUtilizator().CautaUtilizator(username) != null)
                 {
                     MessageBox.Show("Exista deja un utilizator cu username-ul \"" + username + "\"");
                 }
@@ -198,9 +152,10 @@ namespace ArtGallery.Controller
                     if (indexTipUtilizator == 0)
                     {
                         Utilizator utilizator = new Utilizator(username, password, "angajat");
-                        if (persistentaUtilizatori.AdaugareUtilizator(utilizator))
+                        if (model.GetPersistentaUtilizator().AdaugareUtilizator(utilizator))
                         {
                             MessageBox.Show("Adaugare incheiata cu succes!");
+                            model.SetTipOperatie("adaugareuseri");
                             clearFieldsContent();
                         }
                         else
@@ -211,9 +166,10 @@ namespace ArtGallery.Controller
                     if (indexTipUtilizator == 1)
                     {
                         Utilizator utilizator = new Utilizator(username, password, "administrator");
-                        if (persistentaUtilizatori.AdaugareUtilizator(utilizator))
+                        if (model.GetPersistentaUtilizator().AdaugareUtilizator(utilizator))
                         {
                             MessageBox.Show("Adaugare incheiata cu succes!");
+                            model.SetTipOperatie("adaugareuseri");
                             clearFieldsContent();
                         }
                         else
@@ -246,16 +202,17 @@ namespace ArtGallery.Controller
 
                 if (username.Length > 0 && password.Length > 0)
                 {
-                    if (persistentaUtilizatori.CautaUtilizator(selectedUsername) == null)
+                    if (model.GetPersistentaUtilizator().CautaUtilizator(selectedUsername) == null)
                     {
                         MessageBox.Show("Nu exista un utilizator cu acest username!");
                     }
                     else
                     {
                         Utilizator utilizator = new Utilizator(username, password, tipUtilizator==0?"angajat":"administrator");
-                        if (persistentaUtilizatori.ActualizareUtilizator(selectedUsername, utilizator))
+                        if (model.GetPersistentaUtilizator().ActualizareUtilizator(selectedUsername, utilizator))
                         {
                             MessageBox.Show("Actualizare incheiata cu succes!");
+                            model.SetTipOperatie("actualizareuseri");
                             clearFieldsContent();
                         }
 
@@ -277,9 +234,10 @@ namespace ArtGallery.Controller
             else
             {
                 string usernameSelectat = (string)vAdministrator.GetDataGridViewUtilizatori().SelectedRows[0].Cells[0].Value;
-                if (persistentaUtilizatori.StergereUtilizator(usernameSelectat))
+                if (model.GetPersistentaUtilizator().StergereUtilizator(usernameSelectat))
                 {
                     MessageBox.Show("Stergere incheiata cu succes!");
+                    model.SetTipOperatie("stergereuseri");
                     refreshUtilizatori(sender, e);
                 }
                 else
@@ -299,117 +257,35 @@ namespace ArtGallery.Controller
             {
                 string username = (string)vAdministrator.GetDataGridViewUtilizatori().SelectedRows[0].Cells[0].Value;
                 string password = (string)vAdministrator.GetDataGridViewUtilizatori().SelectedRows[0].Cells[1].Value;
-                string tipUtilizator = (string)vAdministrator.GetDataGridViewUtilizatori().SelectedRows[0].Cells[2].Value;
-                vAdministrator.GetTextBoxUsername().Text = username;
-                vAdministrator.GetTextBoxPassword().Text = password;
-                vAdministrator.GetComboBoxTipUtilizator().SelectedIndex = tipUtilizator.Equals("angajat") ? 0 : 1;
+                string tipUtilizator = (string)vAdministrator.GetDataGridViewUtilizatori().SelectedRows[0].Cells[2].Value;                
+                model.SetUtilizator(new Utilizator(username, password, tipUtilizator));
+
+                model.SetTipOperatie("selectieuseri");
             }
         }
 
-        private void cautareUtilizatoriUsername(string informatie)
+        private void romana(object sender, EventArgs e)
         {
-            List<Utilizator> lista = persistentaUtilizatori.FiltrareUtilizatoriUsername(informatie);
-            vAdministrator.GetDataGridViewUtilizatori().Rows.Clear();
-            if (lista != null)
-            {
-                foreach (Utilizator utilizator in lista)
-                {
-                    DataGridViewRow rand = new DataGridViewRow();
-                    rand.CreateCells(vAdministrator.GetDataGridViewUtilizatori());
-                    rand.Cells[0].Value = utilizator.GetUsername();
-                    rand.Cells[1].Value = utilizator.GetPassword();
-                    rand.Cells[2].Value = utilizator.GetTipUtilizator();
-                    vAdministrator.GetDataGridViewUtilizatori().Rows.Add(rand);
-                }
-            }
+            this.model.SetLimba("romana");
+            this.model.SetTipOperatie("limba");
         }
 
-        private void cautareUtilizatoriTip(string informatie)
+        private void engleza(object sender, EventArgs e)
         {
-            List<Utilizator> lista = persistentaUtilizatori.FiltrareUtilizatoriTip(informatie);
-            vAdministrator.GetDataGridViewUtilizatori().Rows.Clear();
-            if (lista != null)
-            {
-                foreach (Utilizator utilizator in lista)
-                {
-                    DataGridViewRow rand = new DataGridViewRow();
-                    rand.CreateCells(vAdministrator.GetDataGridViewUtilizatori());
-                    rand.Cells[0].Value = utilizator.GetUsername();
-                    rand.Cells[1].Value = utilizator.GetPassword();
-                    rand.Cells[2].Value = utilizator.GetTipUtilizator();
-                    vAdministrator.GetDataGridViewUtilizatori().Rows.Add(rand);
-                }
-            }
+            this.model.SetLimba("engleza");
+            this.model.SetTipOperatie("limba");
         }
 
-        private void cautareOpereDupaCriteriu(string informatie, string criteriu)
+        private void italiana(object sender, EventArgs e)
         {
-            List<OperaArta> opere = getListaOpereFiltrata(informatie, criteriu);
-            vAdministrator.GetDataGridViewOpere().Rows.Clear();
-
-            if (opere != null)
-            {
-                foreach (OperaArta opera in opere)
-                {
-                    DataGridViewRow rand = new DataGridViewRow();
-                    rand.CreateCells(vAdministrator.GetDataGridViewOpere());
-                    rand.Cells[indecsiGridPersoane["TitluOpera"]].Value = opera.GetTitlu();
-                    rand.Cells[indecsiGridPersoane["NumeArtist"]].Value = opera.GetNumeArtist();
-                    rand.Cells[indecsiGridPersoane["AnRealizare"]].Value = opera.GetAnRealizare();
-                    if (opera is Tablou)
-                    {
-                        rand.Cells[indecsiGridPersoane["TipOpera"]].Value = "tablou";
-                        rand.Cells[indecsiGridPersoane["GenPictura"]].Value = ((Tablou)opera).GetGenPictura();
-                        rand.Cells[indecsiGridPersoane["TehnicaTablou"]].Value = ((Tablou)opera).GetTehnica();
-                    }
-                    else if (opera is Sculptura)
-                    {
-                        rand.Cells[indecsiGridPersoane["TipOpera"]].Value = "sculptura";
-                        rand.Cells[indecsiGridPersoane["TipSculptura"]].Value = ((Sculptura)opera).GetTip();
-                    }
-                    else
-                    {
-                        rand.Cells[indecsiGridPersoane["TipOpera"]].Value = "operaDeArta";
-                    }
-                    vAdministrator.GetDataGridViewOpere().Rows.Add(rand);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Nu s-a gasit nicio opera!");
-            }
+            this.model.SetLimba("italiana");
+            this.model.SetTipOperatie("limba");
         }
 
-        private List<OperaArta> getListaOpereFiltrata(string informatie, string criteriu)
+        private void spaniola(object sender, EventArgs e)
         {
-            List<OperaArta> opere = new List<OperaArta>();
-
-            switch (criteriu)
-            {
-                case "tipOpera":
-                    opere = this.persistentaOperaArta.FiltrareOpereTip(informatie);
-                    break;
-                case "titluOpera":
-                    opere = this.persistentaOperaArta.FiltrareOpereTitlu(informatie);
-                    break;
-                case "numeArtist":
-                    opere = this.persistentaOperaArta.FiltrareOpereArtist(informatie);
-                    break;
-                case "anRealizare":
-                    opere = this.persistentaOperaArta.FiltrareOpereAn(informatie);
-                    break;
-                case "genPictura":
-                    opere = this.persistentaOperaArta.FiltrareOpereGenPictura(informatie);
-                    break;
-                case "tehnicaPictura":
-                    opere = this.persistentaOperaArta.FiltrareOpereTehnicaPictura(informatie);
-                    break;
-                case "tipSculptura":
-                    opere = this.persistentaOperaArta.FiltrareOpereTipSculptura(informatie);
-                    break;
-            }
-
-            return opere;
+            this.model.SetLimba("spaniola");
+            this.model.SetTipOperatie("limba");
         }
 
         private void clearFieldsContent()
@@ -429,6 +305,11 @@ namespace ArtGallery.Controller
                 ["TehnicaTablou"] = 5,
                 ["TipSculptura"] = 6
             };
+        }
+
+        public void Update()
+        {
+            
         }
     }
 }

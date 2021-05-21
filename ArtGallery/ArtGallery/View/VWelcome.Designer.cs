@@ -39,6 +39,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.linkLabelSignUp = new System.Windows.Forms.LinkLabel();
             this.label2 = new System.Windows.Forms.Label();
+            this.buttonSpaniola = new System.Windows.Forms.Button();
+            this.buttonItaliana = new System.Windows.Forms.Button();
+            this.buttonEngleza = new System.Windows.Forms.Button();
+            this.buttonRomana = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // labelWelcome
@@ -144,11 +148,55 @@
             this.label2.TabIndex = 10;
             this.label2.Text = "SAU";
             // 
+            // buttonSpaniola
+            // 
+            this.buttonSpaniola.BackgroundImage = global::ArtGallery.Properties.Resources.España_svg;
+            this.buttonSpaniola.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonSpaniola.Location = new System.Drawing.Point(704, 7);
+            this.buttonSpaniola.Name = "buttonSpaniola";
+            this.buttonSpaniola.Size = new System.Drawing.Size(84, 45);
+            this.buttonSpaniola.TabIndex = 14;
+            this.buttonSpaniola.UseVisualStyleBackColor = true;
+            // 
+            // buttonItaliana
+            // 
+            this.buttonItaliana.BackgroundImage = global::ArtGallery.Properties.Resources.italia_svg;
+            this.buttonItaliana.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonItaliana.Location = new System.Drawing.Point(614, 7);
+            this.buttonItaliana.Name = "buttonItaliana";
+            this.buttonItaliana.Size = new System.Drawing.Size(84, 45);
+            this.buttonItaliana.TabIndex = 13;
+            this.buttonItaliana.UseVisualStyleBackColor = true;
+            // 
+            // buttonEngleza
+            // 
+            this.buttonEngleza.BackgroundImage = global::ArtGallery.Properties.Resources.Anglia1;
+            this.buttonEngleza.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonEngleza.Location = new System.Drawing.Point(524, 7);
+            this.buttonEngleza.Name = "buttonEngleza";
+            this.buttonEngleza.Size = new System.Drawing.Size(84, 45);
+            this.buttonEngleza.TabIndex = 12;
+            this.buttonEngleza.UseVisualStyleBackColor = true;
+            // 
+            // buttonRomana
+            // 
+            this.buttonRomana.BackgroundImage = global::ArtGallery.Properties.Resources.Romania;
+            this.buttonRomana.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.buttonRomana.Location = new System.Drawing.Point(434, 7);
+            this.buttonRomana.Name = "buttonRomana";
+            this.buttonRomana.Size = new System.Drawing.Size(84, 45);
+            this.buttonRomana.TabIndex = 11;
+            this.buttonRomana.UseVisualStyleBackColor = true;
+            // 
             // VWelcome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonSpaniola);
+            this.Controls.Add(this.buttonItaliana);
+            this.Controls.Add(this.buttonEngleza);
+            this.Controls.Add(this.buttonRomana);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.linkLabelSignUp);
             this.Controls.Add(this.label1);
@@ -180,5 +228,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.LinkLabel linkLabelSignUp;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button buttonRomana;
+        private System.Windows.Forms.Button buttonEngleza;
+        private System.Windows.Forms.Button buttonItaliana;
+        private System.Windows.Forms.Button buttonSpaniola;
     }
 }

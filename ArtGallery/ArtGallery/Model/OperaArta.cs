@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ArtGallery.Model
 {
-    class OperaArta
+    public class OperaArta
     {
         protected string titlu;
         protected string numeArtist;

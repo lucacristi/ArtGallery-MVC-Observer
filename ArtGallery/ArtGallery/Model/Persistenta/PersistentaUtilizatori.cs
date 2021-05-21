@@ -1,44 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace ArtGallery.Model.Persistenta
 {
-    class PersistentaUtilizatori
+    public class PersistentaUtilizatori
     {
-        private readonly string tagUtilizator = "utilizator"; 
-        private readonly string tagUsername = "username"; 
-        private readonly string tagPassword = "password"; 
-        private readonly string tagTipUtilizator = "tipUtilizator"; 
 
-        private string numeFisier;
+        private SqlConnection connection;
 
         public PersistentaUtilizatori()
         {
-            this.numeFisier = "utilizatori.xml";
-        }
-
-        public PersistentaUtilizatori(string numeFisier)
-        {
-            this.numeFisier = numeFisier;
+            string connectionString = ConfigurationManager.ConnectionStrings["Opere"].ConnectionString;
+            connection = new SqlConnection(connectionString);
         }
 
         public bool AdaugareUtilizator(Utilizator utilizator)
         {
             try
             {
-                XElement xElement = XElement.Load(@numeFisier);
-                xElement.Add(new XElement(tagUtilizator,
-                    new XElement(tagUsername, utilizator.GetUsername()),
-                    new XElement(tagPassword, utilizator.GetPassword()),
-                    new XElement(tagTipUtilizator, utilizator.GetTipUtilizator())
-                    ));
-                xElement.Save(@numeFisier);
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand query = getInsertSqlCommand(utilizator);
+                if (query.ExecuteNonQuery() == 0)
+                {
+                    return false;
+                }
+                connection.Close();
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                MessageBox.Show(e.Message, "Eroare Adaugare");
                 return false;
             }
         }
@@ -47,13 +47,21 @@ namespace ArtGallery.Model.Persistenta
         {
             try
             {
-                XDocument xDocument = XDocument.Load(@numeFisier);
-                xDocument.Root.Elements(tagUtilizator).Where(e => e.Element(tagUsername).Value == username).Remove();
-                xDocument.Save(@numeFisier);
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand query = getRemoveSqlCommand(username);
+                if (query.ExecuteNonQuery() == 0)
+                {
+                    return false;
+                }
+                connection.Close();
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                MessageBox.Show(e.Message, "Eroare Stergere");
                 return false;
             }
         }
@@ -62,16 +70,21 @@ namespace ArtGallery.Model.Persistenta
         {
             try
             {
-                XDocument xDocument = XDocument.Load(@numeFisier);
-                var element = xDocument.Root.Elements(tagUtilizator).Where(e => e.Element(tagUsername).Value == username).Single();
-                element.Element(tagUsername).Value = utilizator.GetUsername();
-                element.Element(tagPassword).Value = utilizator.GetPassword();
-                element.Element(tagTipUtilizator).Value = utilizator.GetTipUtilizator();
-                xDocument.Save(@numeFisier);
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                SqlCommand query = getUpdateSqlCommand(username, utilizator);
+                if (query.ExecuteNonQuery() == 0)
+                {
+                    return false;
+                }
+                connection.Close();
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                MessageBox.Show(e.Message, "Eroare Actualizare");
                 return false;
             }
         }
@@ -81,98 +94,101 @@ namespace ArtGallery.Model.Persistenta
             List<Utilizator> utilizatori = new List<Utilizator>();
             try
             {
-                XDocument xDoc = XDocument.Load(@numeFisier);
-                List<XElement> xElemente = xDoc.Root.Elements(tagUtilizator).ToList();
-                foreach (XElement xElement in xElemente)
+                if (connection.State == ConnectionState.Closed)
                 {
-                    string username = xElement.Element(tagUsername).Value;
-                    string password = xElement.Element(tagPassword).Value;
-                    string tipUtilizator = xElement.Element(tagTipUtilizator).Value;
-                    
-                    Utilizator utilizator= new Utilizator(username, password, tipUtilizator);
-                    utilizatori.Add(utilizator);
+                    connection.Open();
                 }
-                return utilizatori;
+
+                SqlCommand query = new SqlCommand("Select * from Users order by [Username]", connection);
+
+                SqlDataAdapter dateCitite = new SqlDataAdapter(query);
+                DataTable tabelUtilizatori = new DataTable();
+                dateCitite.Fill(tabelUtilizatori);
+                connection.Close();
+                return conversie(tabelUtilizatori);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return null;
-            }
-        }
-        
-        public Utilizator CautaUtilizator(string usernameUtilizator)
-        {
-            try
-            {
-                XDocument xDoc = XDocument.Load(@numeFisier);
-                List<XElement> xElemente = xDoc.Root.Elements(tagUtilizator).ToList();
-                foreach (XElement xElement in xElemente)
-                {
-                    string username = xElement.Element(tagUsername).Value;
-                    if (username == usernameUtilizator)
-                    {
-                        string password = xElement.Element(tagPassword).Value;
-                        string tipUtilizator = xElement.Element(tagTipUtilizator).Value;
-                        
-                        Utilizator utilizator = new Utilizator(username, password, tipUtilizator);
-                        return utilizator;
-                    }
-                }
-                return null;
-            }
-            catch (Exception)
-            {
+                MessageBox.Show(e.Message, "Eroare vizualizare");
                 return null;
             }
         }
 
-        public List<Utilizator> FiltrareUtilizatoriUsername(string usernameUtilizator)
+        public Utilizator CautaUtilizator(string username)
         {
-            List<Utilizator> utilizatori = new List<Utilizator>();
-            try
-            {
-                XDocument xDoc = XDocument.Load(@numeFisier);
-                List<XElement> xElemente = xDoc.Root.Elements(tagUtilizator).ToList();
-                foreach (XElement xElement in xElemente)
-                {
-                    string username = xElement.Element(tagUsername).Value;
-                    if (username.Equals(usernameUtilizator))
-                    {
-                        string password = xElement.Element(tagPassword).Value;
-                        string tipUtilizator = xElement.Element(tagTipUtilizator).Value;
-                        Utilizator utilizator = new Utilizator(username, password, tipUtilizator);
-                        utilizatori.Add(utilizator);
-                    }
-                }
-                return utilizatori;
-            }
-            catch (Exception)
+            List<Utilizator> utilizatori = filtrareUtilizatori("Username", username);
+            if (utilizatori.Count == 0)
             {
                 return null;
             }
+            return utilizatori[0];
         }
+
+        public List<Utilizator> FiltrareUtilizatoriUsername(string usernameUtilizator)
+        {
+            return filtrareUtilizatori("Username", usernameUtilizator);
+        }
+
         public List<Utilizator> FiltrareUtilizatoriTip(string tipUtilizator)
         {
-            List<Utilizator> utilizatori = new List<Utilizator>();
+            return filtrareUtilizatori("TipUtilizator", tipUtilizator);
+        }        
+
+
+        private SqlCommand getInsertSqlCommand(Utilizator utilizator) {  
+            return new SqlCommand("insert into Users values('" + utilizator.GetUsername() + "','" + utilizator.GetPassword() + "','" + utilizator.GetTipUtilizator() + "')", connection); ;
+        }
+        private SqlCommand getRemoveSqlCommand(string username)
+        { 
+            return new SqlCommand("delete from Users where [Username]='" + username + "'", connection);
+        }
+        private SqlCommand getUpdateSqlCommand(string username, Utilizator utilizator)
+        {
+            return new SqlCommand("update Users set [Username]='" + utilizator.GetUsername() + "', [Password] ='" + utilizator.GetPassword() + "', [TipUtilizator] = '" + utilizator.GetTipUtilizator() + "' where [Username] ='" + username + "'", connection);
+        }
+        private List<Utilizator> conversie(DataTable utilizatori)
+        {
+            List<Utilizator> lista = new List<Utilizator>();
+
+            foreach (DataRow dataRow in utilizatori.Rows)
+            {
+                Utilizator utilizator = new Utilizator((string)dataRow["Username"], (string)dataRow["Password"], (string)dataRow["TipUtilizator"]);         
+                lista.Add(utilizator);
+            }
+            return lista;
+        }
+        private List<Utilizator> filtrareUtilizatori(string criteriu, string informatie)
+        {
             try
             {
-                XDocument xDoc = XDocument.Load(@numeFisier);
-                List<XElement> xElemente = xDoc.Root.Elements(tagUtilizator).ToList();
-                foreach (XElement xElement in xElemente)
+                List<Utilizator> utilizatori = new List<Utilizator>();
+                SqlCommand query = null;
+
+                switch (criteriu)
                 {
-                    string tip = xElement.Element(tagTipUtilizator).Value;
-                    if (tip.Equals(tipUtilizator))
-                    {
-                        string username = xElement.Element(tagUsername).Value;
-                        string password = xElement.Element(tagPassword).Value;
-                        Utilizator utilizator = new Utilizator(username, password, tipUtilizator);
-                        utilizatori.Add(utilizator);
-                    }
+                    case "Username":
+                        query = new SqlCommand("Select * from Users where [" + criteriu + "] = '" + informatie + "'", connection);
+                        break;                    
+                    case "TipUtilizator":
+                        query = new SqlCommand("Select * from Users where [" + criteriu + "] = '" + informatie + "'", connection);
+                        break;
                 }
-                return utilizatori;
+
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+
+                SqlDataAdapter dateCitite = new SqlDataAdapter(query);
+                DataSet dataSet = new DataSet();
+                dateCitite.Fill(dataSet, "vizualizareUtilizatori");
+                DataTable utilizatoriTabel = dataSet.Tables["vizualizareUtilizatori"];
+                connection.Close();
+                return conversie(utilizatoriTabel);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                MessageBox.Show(ex.Message, "Eroare cautare dupa " + criteriu);
                 return null;
             }
         }

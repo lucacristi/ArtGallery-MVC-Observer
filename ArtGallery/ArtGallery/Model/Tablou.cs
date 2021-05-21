@@ -1,6 +1,6 @@
 ﻿namespace ArtGallery.Model
 {
-    class Tablou:OperaArta
+    public class Tablou:OperaArta
     {
         private string genPictura;
         private string tehnica;

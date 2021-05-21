@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ArtGallery.Model
 {
-    abstract class Opere
+    public abstract class Opere
     {
         protected List<Observer> observers;
 
